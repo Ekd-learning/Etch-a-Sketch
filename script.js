@@ -1,7 +1,6 @@
 "use strict";
 const grid_generator_btn = document.querySelector(`#grid_generator_btn`);
 const grid_container = document.querySelector(`#grid_container`);
-console.log(grid_container);
 
 const validateNumber = function (num) {
   return !isNaN(num) && isFinite(num);
@@ -40,6 +39,18 @@ const clearGrid = function () {
   console.log("3", grid_container);
 };
 
+const adjustBrightness = function (element) {
+  // darken
+  const value = element.style.getPropertyValue("filter");
+  let percentage = value.substring(value.length - 4, value.length - 2);
+  if (percentage.length === 2 && percentage === "00") {
+    percentage = 100;
+  } else {
+    percentage = +percentage;
+  }
+  element.style.filter = `brightness(${percentage - 10}%)`;
+};
+
 const generateGrid = function (grid_number = 16) {
   const squareMaxHeight =
     (document.querySelector(`body`).offsetHeight * 0.8) / grid_number;
@@ -51,6 +62,7 @@ const generateGrid = function (grid_number = 16) {
       square_div.classList.add("square");
       //setRandomColor(square_div); // testing purposes
       square_div.style.backgroundColor = "white";
+      square_div.style.filter = "brightness(100%)";
       square_div.style.height = `${squareMaxHeight}px`;
       square_div.style.width = `${squareMaxHeight}px`;
       square_div.style.maxWidth = "960px";
@@ -58,7 +70,9 @@ const generateGrid = function (grid_number = 16) {
       square_div.style.border = "1px solid black";
       square_div.appendChild(document.createElement("div"));
       square_div.addEventListener("mouseover", function () {
-        toggleElementBackground(square_div);
+        //toggleElementBackground(square_div);  // basic functionality
+        //setRandomColor(square_div); // bonus points #1;
+        adjustBrightness(square_div); // bonus points #2
       });
       row.appendChild(square_div);
     }
