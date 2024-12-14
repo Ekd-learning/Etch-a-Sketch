@@ -41,6 +41,8 @@ const clearGrid = function () {
 };
 
 const generateGrid = function (grid_number = 16) {
+  const squareMaxHeight =
+    (document.querySelector(`body`).offsetHeight * 0.8) / grid_number;
   for (let i = 0; i < grid_number; i++) {
     const row = document.createElement("div");
     row.classList.add("grid_row");
@@ -49,8 +51,10 @@ const generateGrid = function (grid_number = 16) {
       square_div.classList.add("square");
       //setRandomColor(square_div); // testing purposes
       square_div.style.backgroundColor = "white";
-      square_div.style.width = "30px";
-      square_div.style.height = "30px";
+      square_div.style.height = `${squareMaxHeight}px`;
+      square_div.style.width = `${squareMaxHeight}px`;
+      square_div.style.maxWidth = "960px";
+      square_div.style.maxHeight = "960px";
       square_div.style.border = "1px solid black";
       square_div.appendChild(document.createElement("div"));
       square_div.addEventListener("mouseover", function () {
